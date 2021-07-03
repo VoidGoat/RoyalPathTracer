@@ -12,21 +12,6 @@
 
 #include "camera.h"
 
-// return normal if
-double hit_sphere(const point& center, double radius, const ray& r)
-{
-    vec unit_vec = r.direction().normalized();
-    vec oc = r.origin() - center;
-    double x = unit_vec.dot(oc);
-    double del = x * x - (oc.length_squared() - radius * radius);
-    if (del > 0)
-    {
-        return -(unit_vec.dot(oc)) - std::sqrt(del);
-    } else 
-    {
-        return -1.0;
-    }
-}
 
 color ray_color(const ray& r, const traceable& world, int depth)
 {
@@ -38,7 +23,7 @@ color ray_color(const ray& r, const traceable& world, int depth)
     hit_info info;
     if (world.hit(r, 0.001, 10000, info))
     {
-        point target = info.p + info.normal + random_in_unit_sphere();
+        point target = info.p + info.normal + random_unit_vector();
         return 0.5 * ray_color(ray(info.p, target - info.p), world, depth - 1);
 
         // visualize geometry normals

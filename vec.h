@@ -132,3 +132,8 @@ vec random_in_unit_sphere()
         return p;
     }
 }
+
+vec random_unit_vector()
+{
+   return random_in_unit_sphere().normalized();
+}
